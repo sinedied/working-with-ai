@@ -11,7 +11,7 @@ These files contain results from the paper:
 
 ## File descriptions
 - `iwa_metrics.csv`: IWA-level metrics, reported separately for user goals and AI actions. 
-- `soc_ai_applicability_scores.csv`: AI applicability scores for each SOC code (average of user goal and AI action scores).
+- `ai_applicability_scores.csv`: AI applicability scores for each SOC code (average of user goal and AI action scores).
 - `soc_metrics.csv`: IWA-level metrics aggregated to detailed SOC codes according to the SOC-IWA weights, reported separately for user goals and AI actions.
 - `soc_iwa_weights.csv`: IWA weights for each SOC code based on O*NET relevance and importance.
 - `soc_to_iwas.csv`: Mapping of SOC codes to associated IWAs.
@@ -23,7 +23,7 @@ In brief, the IWA-level metrics are:
 - `completion_{user,ai}`: the fraction of conversations mapping to an IWA (as a user goal or AI action) where our completion classfiier indicates that the LLM completed the user’s goal. 
 - `impact_scope_{user,ai}`: the fraction of conversations mapping to an IWA (as a user goal or AI action) where the classified scope of impact is moderate or higher.
 - `feedback_positive_fraction_{user,ai}`: of all thumbs reactions in Copilot-Thumbs on conversations mapping to an IWA (as a user goal or AI action), the fraction where the reaction was a thumbs up.
-- `completion_x_scope_x_coverage_{user,ai}`: for convenience, the product of completion, impact scope, and the indicator `1[share > 0.0005]`. The weighted sum of the user column using the weights in `soc_iwa_weights` yields the user-side AI applicability score (`soc_iwa_weights_nonphysical` for AI-side). The two sides are averaged together to compute the final AI applicability scores reported in `soc_ai_applicability_scores.csv`.
+- `completion_x_scope_x_coverage_{user,ai}`: for convenience, the product of completion, impact scope, and the indicator `1[share > 0.0005]`. The weighted sum of the user column using the weights in `soc_iwa_weights` yields the user-side AI applicability score (`soc_iwa_weights_nonphysical` for AI-side). The two sides are averaged together to compute the final AI applicability scores reported in `ai_applicability_scores.csv`.
 
 The SOC-code-level metrics are:
 - `completion_{user,ai}`, `impact_scope_{user,ai}`, `feedback_positive_fraction_{user,ai}`: same as above, aggregated to SOC occupations according to IWA weights
@@ -39,7 +39,7 @@ Additionally, some tasks in O\*NET are missing rating data. See the paper's appe
 
 
 ## Computing AI applicability score
-The following code implements Equation (1) from the paper, averaging user and AI applicability scores. For convenience, AI applicability score is precomputed in `soc_ai_applicability_scores.csv`.
+The following code implements the AI applicability score equation from the paper, averaging user and AI applicability scores (using nonphysical tasks only for the AI action side). For convenience, AI applicability score is precomputed in `ai_applicability_scores.csv`.
 
 ```python
 import pandas as pd
