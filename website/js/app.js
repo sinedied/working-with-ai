@@ -1,4 +1,4 @@
-import { questions, computeScore, getScoreLabel } from './questions.js';
+import { questions, computeScore, getScoreLabel, getTimelineEstimate } from './questions.js';
 import { occupations } from './occupations.js';
 
 // ─── State ───────────────────────────────────────────────────────────────────
@@ -232,8 +232,9 @@ function animateResult() {
       scoreDesc.textContent = labelInfo.description;
       scoreDesc.classList.add('visible');
 
-      // Show similar occupations
-      setTimeout(showSimilarOccupations, 400);
+      // Show timeline, then similar occupations
+      setTimeout(() => showTimeline(score), 300);
+      setTimeout(showSimilarOccupations, 800);
     }
   }
 
@@ -284,6 +285,41 @@ function showSimilarOccupations() {
   });
 
   $('#similar-section').classList.add('visible');
+}
+
+function showTimeline(score) {
+  const timeline = getTimelineEstimate(score);
+
+  // Set year labels
+  $('#timeline-early').textContent = timeline.earlyYear;
+  $('#timeline-mid').textContent = timeline.midYear;
+  $('#timeline-late').textContent = timeline.lateYear;
+  $('#timeline-outlook').textContent = timeline.outlook;
+
+  // Position the range and marker on the track
+  // Map years to 0-100% on a fixed axis (2025-2080)
+  const axisStart = 2025;
+  const axisEnd = 2080;
+  const axisSpan = axisEnd - axisStart;
+
+  const earlyPct = Math.max(0, Math.min(100, ((timeline.earlyYear - axisStart) / axisSpan) * 100));
+  const midPct = Math.max(0, Math.min(100, ((timeline.midYear - axisStart) / axisSpan) * 100));
+  const latePct = Math.max(0, Math.min(100, ((timeline.lateYear - axisStart) / axisSpan) * 100));
+
+  const rangeEl = $('#timeline-range');
+  const markerEl = $('#timeline-marker');
+
+  rangeEl.style.left = `${earlyPct}%`;
+  rangeEl.style.width = `${latePct - earlyPct}%`;
+  markerEl.style.left = `${midPct}%`;
+
+  // Position year labels
+  $('#timeline-early').style.left = `${earlyPct}%`;
+  $('#timeline-mid').style.left = `${midPct}%`;
+  $('#timeline-late').style.left = `${latePct}%`;
+
+  // Reveal with animation
+  $('#timeline-section').classList.add('visible');
 }
 
 // ─── Occupation Explorer ─────────────────────────────────────────────────────
@@ -392,6 +428,7 @@ function restart() {
   $('#score-gauge').style.setProperty('--current-angle', '0deg');
   $('#score-label').classList.remove('visible');
   $('#score-description').classList.remove('visible');
+  $('#timeline-section').classList.remove('visible');
   $('#similar-section').classList.remove('visible');
   $('#occupation-explorer').classList.remove('open');
   $('#toggle-explorer').textContent = 'Browse all 787 occupations';

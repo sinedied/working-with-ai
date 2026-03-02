@@ -189,3 +189,48 @@ export function getScoreLabel(score) {
   if (score < 0.32) return { label: "High", description: "AI has significant applicability to your type of work. Many of your tasks involve information, analysis, or communication that AI tools can assist with." };
   return { label: "Very High", description: "AI has very high applicability to your work. Your role heavily involves language, research, and information tasks where current AI tools show strong capability." };
 }
+
+// Estimate a timeline for significant AI transformation of the occupation.
+// Based on Grace et al. (2024) "Thousands of AI Authors on the Future of AI":
+//   - 2,778 AI researchers surveyed (arXiv:2401.02843)
+//   - 50% chance of HLMI (AI outperforms humans in all tasks) by 2047
+//   - 10% chance of FAOL (all occupations fully automatable) by 2037
+//   - 50% chance of FAOL by 2116
+//
+// The score (0–0.50) is used to interpolate within the research timeline:
+//   Higher applicability → tasks are already being transformed → sooner impact
+//   Lower applicability → physical/embodied work → later impact
+export function getTimelineEstimate(score) {
+  // Normalize score to 0–1 range
+  const t = Math.min(score / 0.50, 1);
+
+  // Apply easing: high-applicability jobs separate more at the early end
+  const eased = Math.pow(t, 0.6);
+
+  // "Significant transformation" = most information tasks automatable
+  // High-applicability (0.50): ~2028 optimistic / ~2034 median / ~2042 conservative
+  // Low-applicability  (0.00): ~2048 optimistic / ~2060 median / ~2078 conservative
+  const earlyRange = [2048, 2028]; // [score=0, score=max]
+  const midRange   = [2060, 2034]; // anchored to ~HLMI timeline
+  const lateRange  = [2078, 2042]; // conservative bound
+
+  const earlyYear = Math.round(earlyRange[0] - eased * (earlyRange[0] - earlyRange[1]));
+  const midYear   = Math.round(midRange[0]   - eased * (midRange[0]   - midRange[1]));
+  const lateYear  = Math.round(lateRange[0]  - eased * (lateRange[0]  - lateRange[1]));
+
+  // Generate a description based on score tier
+  let outlook;
+  if (score >= 0.32) {
+    outlook = "Your type of work involves tasks where AI is already proving highly capable. Significant transformation of these roles is likely within the next decade.";
+  } else if (score >= 0.22) {
+    outlook = "Many of your work tasks align with areas where AI is progressing rapidly. Expect substantial augmentation within 10–15 years, with deeper changes to follow.";
+  } else if (score >= 0.15) {
+    outlook = "AI will likely augment parts of your work in the coming years, but full transformation will take longer as many tasks still require human judgment or presence.";
+  } else if (score >= 0.08) {
+    outlook = "Your work has characteristics that are harder for AI to replicate. While some tasks may be augmented, significant transformation is likely further out.";
+  } else {
+    outlook = "Your work involves substantial physical or embodied tasks where AI progress is slowest. Robotic and physical AI capabilities lag well behind cognitive AI.";
+  }
+
+  return { earlyYear, midYear, lateYear, outlook };
+}

@@ -34,7 +34,7 @@ Interactive quiz website and research data for measuring the applicability of ge
 
 - **Vanilla HTML5 + CSS3 + ES Modules** — no runtime framework dependencies
 - **Vite** for dev server (HMR) and production builds
-- **Google Fonts**: Syne (display) + DM Sans (body)
+- **Google Fonts**: Plus Jakarta Sans (display) + DM Sans (body)
 - **CSS custom properties** for theming; CSS animations for transitions and effects
 - **GitHub Actions** with Vite build + `actions/deploy-pages@v4` for deployment
 
@@ -102,6 +102,18 @@ To adjust questions or weights, edit `website/js/questions.js`. Key properties:
 - `inverse`: if true, high answer reduces the score
 - `computeScore()`: the aggregation formula
 - `getScoreLabel()`: threshold-based labeling (Very Low → Very High)
+- `getTimelineEstimate()`: maps score to estimated AI transformation year range
+
+### Timeline Estimation
+The result screen includes an estimated AI transformation timeline, based on:
+- **Grace et al. (2024)** "Thousands of AI Authors on the Future of AI" (arXiv:2401.02843):
+  2,778 AI researchers forecast 50% chance of HLMI by 2047, 10% chance of FAOL by 2037
+- The quiz score (0–0.50) is interpolated within these research timelines
+- Higher applicability → sooner estimated transformation; lower → later
+- Displayed as a range (optimistic / median / conservative years)
+- Includes a clear caveat that this is speculative, not a prediction of job displacement
+
+To adjust timeline estimates, edit `getTimelineEstimate()` in `website/js/questions.js`.
 
 ## Coding Guidelines
 
@@ -123,5 +135,5 @@ To adjust questions or weights, edit `website/js/questions.js`. Key properties:
 
 - Test the website with `cd website && npm run dev` (or `npm run build && npm run preview`)
 - Verify responsive layout on mobile viewport (Chrome DevTools)
-- Ensure the full quiz flow works: landing → 10 questions → result with gauge animation → occupation explorer
+- Ensure the full quiz flow works: landing → 10 questions → result with gauge animation → timeline → occupation explorer
 - Validate GitHub Actions YAML syntax if modifying the workflow
