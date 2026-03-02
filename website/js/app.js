@@ -25,6 +25,9 @@ export function init() {
   // Restore saved progress
   loadProgress();
 
+  // Theme toggle
+  $('#theme-toggle').addEventListener('click', toggleTheme);
+
   // Landing CTA
   $('#start-btn').addEventListener('click', () => {
     showScreen('question');
@@ -58,6 +61,18 @@ export function init() {
   // Render initial state
   renderQuestion();
   populateOccupations();
+}
+
+// ─── Theme Toggle ────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+
+  // Update theme-color meta tag
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = next === 'light' ? '#f5f7fb' : '#0a0e1a';
 }
 
 // ─── Screen Transitions ─────────────────────────────────────────────────────

@@ -35,6 +35,26 @@
   --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* ── Light Theme ──────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-deep: #f5f7fb;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f2f8;
+  --bg-surface: #eef1f8;
+  --text-primary: #1a1d2e;
+  --text-secondary: #5a6178;
+  --text-muted: #9ca3b8;
+  --accent-cyan: #0891b2;
+  --accent-magenta: #c026d3;
+  --accent-purple: #7c3aed;
+  --accent-rose: #e11d48;
+  --gradient-accent: linear-gradient(135deg, #0891b2 0%, #7c3aed 50%, #c026d3 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(8, 145, 178, 0.08) 0%, rgba(124, 58, 237, 0.08) 50%, rgba(192, 38, 211, 0.08) 100%);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(8, 145, 178, 0.3);
+  --shadow-glow: 0 0 60px rgba(8, 145, 178, 0.06), 0 0 120px rgba(124, 58, 237, 0.04);
+}
+
 /* ── Reset & Base ─────────────────────────────────────────────────────────── */
 *, *::before, *::after {
   margin: 0;
@@ -1061,6 +1081,132 @@ body {
   .bg-mesh::before {
     animation: none;
   }
+}
+
+/* ── Light Theme Overrides ─────────────────────────────────────────────────── */
+[data-theme="light"] .bg-mesh::before {
+  background:
+    radial-gradient(ellipse 600px 600px at 20% 30%, rgba(8, 145, 178, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 80% 20%, rgba(124, 58, 237, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 400px at 60% 80%, rgba(192, 38, 211, 0.05) 0%, transparent 70%);
+}
+
+[data-theme="light"] .bg-mesh::after {
+  opacity: 0.15;
+}
+
+[data-theme="light"] .option-btn.selected {
+  background: rgba(8, 145, 178, 0.06);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(8, 145, 178, 0.06), inset 0 0 20px rgba(8, 145, 178, 0.02);
+}
+
+[data-theme="light"] .option-marker {
+  background: rgba(90, 97, 120, 0.08);
+}
+
+[data-theme="light"] .option-btn:hover .option-marker {
+  background: rgba(90, 97, 120, 0.15);
+}
+
+[data-theme="light"] .timeline-caveat {
+  background: rgba(8, 145, 178, 0.04);
+}
+
+[data-theme="light"] .search-input:focus {
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.1);
+}
+
+[data-theme="light"] .score-gauge {
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .occupation-card {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .nav-btn.primary {
+  box-shadow: 0 2px 16px rgba(8, 145, 178, 0.18);
+}
+
+[data-theme="light"] .nav-btn.primary:hover:not(:disabled) {
+  box-shadow: 0 4px 24px rgba(8, 145, 178, 0.28);
+}
+
+[data-theme="light"] .start-btn {
+  box-shadow: 0 4px 30px rgba(8, 145, 178, 0.18);
+}
+
+[data-theme="light"] .start-btn:hover {
+  box-shadow: 0 6px 40px rgba(8, 145, 178, 0.28);
+}
+
+[data-theme="light"] .timeline-marker {
+  border-color: var(--bg-deep);
+  box-shadow: 0 0 12px rgba(8, 145, 178, 0.35);
+}
+
+[data-theme="light"] ::selection {
+  background: rgba(8, 145, 178, 0.15);
+}
+
+/* ── Theme Toggle ─────────────────────────────────────────────────────────── */
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.theme-toggle:hover {
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+  transform: scale(1.05);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(15deg);
+}
+
+.theme-icon-sun,
+.theme-icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-icon-moon {
+  display: none;
+}
+
+[data-theme="light"] .theme-icon-sun {
+  display: none;
+}
+
+[data-theme="light"] .theme-icon-moon {
+  display: block;
 }
 
 /* ── Scrollbar ────────────────────────────────────────────────────────────── */

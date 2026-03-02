@@ -35,7 +35,7 @@ Interactive quiz website and research data for measuring the applicability of ge
 - **Vanilla HTML5 + CSS3 + ES Modules** — no runtime framework dependencies
 - **Vite** for dev server (HMR) and production builds
 - **Google Fonts**: Plus Jakarta Sans (display) + DM Sans (body)
-- **CSS custom properties** for theming; CSS animations for transitions and effects
+- **CSS custom properties** for theming (light/dark); CSS animations for transitions and effects
 - **GitHub Actions** with Vite build + `actions/deploy-pages@v4` for deployment
 
 ## Development Workflow
@@ -120,6 +120,7 @@ To adjust timeline estimates, edit `getTimelineEstimate()` in `website/js/questi
 
 - **Vite** for dev/build tooling — keep the SPA as vanilla HTML/CSS/JS (no runtime frameworks)
 - **CSS custom properties** in `:root` for all colors, fonts, spacing, radii
+- **Light/dark theme**: dark variables in `:root`, light overrides under `[data-theme="light"]`. System preference detected via `prefers-color-scheme`; user choice persisted in `localStorage('theme')`. Toggle button in fixed top-right corner.
 - **Mobile-first** responsive design with breakpoints at 480px and 768px
 - **`prefers-reduced-motion`** media query disables animations
 - **ES modules** (`type="module"`) for JS — import/export, no bundler
@@ -130,7 +131,7 @@ To adjust timeline estimates, edit `getTimelineEstimate()` in `website/js/questi
 
 - No server-side code, no API calls, no user data collection
 - All data is embedded client-side; no external requests except Google Fonts
-- LocalStorage used only for saving quiz progress (answers array + question index)
+- LocalStorage used only for saving quiz progress (answers array + question index) and theme preference
 
 ## Pull Request Guidelines
 
