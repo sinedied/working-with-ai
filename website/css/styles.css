@@ -284,6 +284,24 @@ body {
   gap: 0.4rem;
 }
 
+.landing-footer {
+  margin-top: -1.25rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.landing-footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+
+.landing-footer a:hover {
+  color: var(--accent-cyan);
+  border-bottom-color: var(--accent-cyan);
+}
+
 /* ── Question Screen ──────────────────────────────────────────────────────── */
 .question-screen {
   justify-content: flex-start;
