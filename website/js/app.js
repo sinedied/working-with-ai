@@ -297,9 +297,9 @@ function showTimeline(score) {
   $('#timeline-outlook').textContent = timeline.outlook;
 
   // Position the range and marker on the track
-  // Map years to 0-100% on a fixed axis (2025-2080)
-  const axisStart = 2025;
-  const axisEnd = 2080;
+  // Map years to 0-100% on a fixed axis (2026-2062)
+  const axisStart = 2026;
+  const axisEnd = 2062;
   const axisSpan = axisEnd - axisStart;
 
   const earlyPct = Math.max(0, Math.min(100, ((timeline.earlyYear - axisStart) / axisSpan) * 100));

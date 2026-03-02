@@ -105,10 +105,11 @@ To adjust questions or weights, edit `website/js/questions.js`. Key properties:
 - `getTimelineEstimate()`: maps score to estimated AI transformation year range
 
 ### Timeline Estimation
-The result screen includes an estimated AI transformation timeline, based on:
-- **Grace et al. (2024)** "Thousands of AI Authors on the Future of AI" (arXiv:2401.02843):
-  2,778 AI researchers forecast 50% chance of HLMI by 2047, 10% chance of FAOL by 2037
-- The quiz score (0–0.50) is interpolated within these research timelines
+The result screen includes an estimated replacement timeline, based on:
+- **Metaculus community forecasts** (~1,700 forecasters, continuously updated):
+  Weakly general AI expected by ~2028, general AI by ~2033
+  (https://metaculus.com/questions/3479/ and /5121/)
+- The quiz score (0–0.50) is interpolated within these forecasted timelines
 - Higher applicability → sooner estimated transformation; lower → later
 - Displayed as a range (optimistic / median / conservative years)
 - Includes a clear caveat that this is speculative, not a prediction of job displacement
