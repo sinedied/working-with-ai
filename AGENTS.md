@@ -4,7 +4,7 @@ Interactive quiz website and research data for measuring the applicability of ge
 
 ## Overview
 
-- **Research data**: CSV files at the repository root containing AI applicability scores for 787 US occupations (SOC codes), derived from Bing Copilot consumer usage data (Jan–Sep 2024)
+- **Research data**: CSV files under `paper/` containing AI applicability scores for 787 US occupations (SOC codes), derived from Bing Copilot consumer usage data (Jan–Sep 2024)
 - **Interactive website**: A vanilla HTML/CSS/JS single-page application under `website/` that presents a 10-question quiz to estimate how applicable AI is to a user's occupation
 
 ## Project Structure
@@ -20,13 +20,15 @@ Interactive quiz website and research data for measuring the applicability of ge
 │       ├── app.js              # SPA logic: navigation, transitions, score animation
 │       ├── questions.js        # 10 quiz questions, weights, scoring formula
 │       └── occupations.js      # 787 occupation scores (auto-generated from CSV)
-├── ai_applicability_scores.csv # Final AI applicability score per SOC occupation
-├── iwa_metrics.csv             # Per-IWA metrics (share, completion, impact)
-├── soc_metrics.csv             # IWA metrics aggregated to occupation level
-├── soc_to_iwas.csv             # SOC → IWA mapping
-├── soc_iwa_weights.csv         # O*NET relevance/importance weights
-├── soc_iwa_nonphysical_weights.csv  # Same, zeroing out physical tasks
-├── physical_tasks.csv          # Binary physical/non-physical task classification
+├── paper/                      # Research data from Microsoft Research paper
+│   ├── README.md               # Data file descriptions and methodology
+│   ├── ai_applicability_scores.csv # Final AI applicability score per SOC occupation
+│   ├── iwa_metrics.csv         # Per-IWA metrics (share, completion, impact)
+│   ├── soc_metrics.csv         # IWA metrics aggregated to occupation level
+│   ├── soc_to_iwas.csv         # SOC → IWA mapping
+│   ├── soc_iwa_weights.csv     # O*NET relevance/importance weights
+│   ├── soc_iwa_nonphysical_weights.csv  # Same, zeroing out physical tasks
+│   └── physical_tasks.csv      # Binary physical/non-physical task classification
 └── .github/workflows/deploy.yml # GitHub Actions: deploy website/ to GitHub Pages
 ```
 
@@ -56,12 +58,12 @@ npm run preview       # preview the production build locally
 ```
 
 ### Regenerating Occupation Data
-If `ai_applicability_scores.csv` is updated, regenerate the JS data file:
+If `paper/ai_applicability_scores.csv` is updated, regenerate the JS data file:
 ```bash
 python3 -c "
 import csv
 rows = []
-with open('ai_applicability_scores.csv') as f:
+with open('paper/ai_applicability_scores.csv') as f:
     for r in csv.DictReader(f):
         rows.append((r['SOC Code'], r['title'], round(float(r['ai_applicability_score']), 4)))
 rows.sort(key=lambda x: x[2], reverse=True)
