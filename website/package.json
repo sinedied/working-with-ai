@@ -1,0 +1,15 @@
+{
+  "name": "working-with-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive quiz to estimate AI applicability to your occupation",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6"
+  }
+}

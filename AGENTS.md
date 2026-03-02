@@ -12,6 +12,8 @@ Interactive quiz website and research data for measuring the applicability of ge
 ```
 ├── website/                    # SPA quiz website (deployed to GitHub Pages)
 │   ├── index.html              # Main HTML shell with three screens
+│   ├── package.json            # Node.js project config (Vite dev dependency)
+│   ├── vite.config.js          # Vite configuration
 │   ├── css/
 │   │   └── styles.css          # All styles, animations, responsive rules
 │   └── js/
@@ -30,20 +32,28 @@ Interactive quiz website and research data for measuring the applicability of ge
 
 ## Key Technologies and Frameworks
 
-- **Vanilla HTML5 + CSS3 + ES Modules** — zero NPM dependencies, no build step
+- **Vanilla HTML5 + CSS3 + ES Modules** — no runtime framework dependencies
+- **Vite** for dev server (HMR) and production builds
 - **Google Fonts**: Syne (display) + DM Sans (body)
 - **CSS custom properties** for theming; CSS animations for transitions and effects
-- **GitHub Actions** with `actions/deploy-pages@v4` for deployment
+- **GitHub Actions** with Vite build + `actions/deploy-pages@v4` for deployment
 
 ## Development Workflow
 
 ### Local Development
 ```bash
-# Serve the website locally (any static file server works)
 cd website
-npx serve .           # or: python3 -m http.server 8000
+npm install           # first time only
+npm run dev           # start Vite dev server with HMR
 ```
-Open `http://localhost:3000` (or `8000`). No compilation needed — edit and refresh.
+Open `http://localhost:5173`. Vite provides hot module replacement — edits reflect instantly.
+
+### Production Build
+```bash
+cd website
+npm run build         # outputs to website/dist/
+npm run preview       # preview the production build locally
+```
 
 ### Regenerating Occupation Data
 If `ai_applicability_scores.csv` is updated, regenerate the JS data file:
@@ -67,7 +77,7 @@ print('\n'.join(lines))
 ```
 
 ### Deployment
-Pushes to `main` that modify `website/**` auto-deploy to GitHub Pages via the workflow at `.github/workflows/deploy.yml`. Manual deploys can be triggered from the Actions tab.
+Pushes to `main` that modify `website/**` auto-deploy to GitHub Pages via the workflow at `.github/workflows/deploy.yml`. The workflow runs `npm ci && npm run build` then deploys `website/dist/`. Manual deploys can be triggered from the Actions tab.
 
 ## How Scoring Works
 
@@ -95,7 +105,7 @@ To adjust questions or weights, edit `website/js/questions.js`. Key properties:
 
 ## Coding Guidelines
 
-- **No frameworks or build tools** — keep the SPA as vanilla HTML/CSS/JS
+- **Vite** for dev/build tooling — keep the SPA as vanilla HTML/CSS/JS (no runtime frameworks)
 - **CSS custom properties** in `:root` for all colors, fonts, spacing, radii
 - **Mobile-first** responsive design with breakpoints at 480px and 768px
 - **`prefers-reduced-motion`** media query disables animations
@@ -111,7 +121,7 @@ To adjust questions or weights, edit `website/js/questions.js`. Key properties:
 
 ## Pull Request Guidelines
 
-- Test the website by opening `website/index.html` in a browser (requires a local server for ES modules)
+- Test the website with `cd website && npm run dev` (or `npm run build && npm run preview`)
 - Verify responsive layout on mobile viewport (Chrome DevTools)
 - Ensure the full quiz flow works: landing → 10 questions → result with gauge animation → occupation explorer
 - Validate GitHub Actions YAML syntax if modifying the workflow
