@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Working with AI — Could AI Do Your Job?</title>
+  <meta name="description" content="Take a 10-question quiz to discover how applicable AI is to your occupation, based on Microsoft Research data from 787 real occupations.">
+  <meta name="theme-color" content="#0a0e1a">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Working with AI — Could AI Do Your Job?">
+  <meta property="og:description" content="Take a 10-question quiz based on Microsoft Research data to discover how applicable AI is to your type of work.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon (simple SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Animated background -->
+  <div class="bg-mesh" aria-hidden="true"></div>
+
+  <div class="app">
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- LANDING SCREEN                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="landing-screen" class="screen landing screen-active" aria-label="Welcome">
+      <div class="landing-badge">
+        <span class="dot"></span>
+        Based on Microsoft Research data
+      </div>
+
+      <h1>
+        Could <span class="gradient-text">AI</span> do<br>your job?
+      </h1>
+
+      <p class="landing-subtitle">
+        Answer 10 questions about the nature of your work and discover how
+        applicable today's AI tools are to your occupation — based on real
+        usage data from 787 occupations.
+      </p>
+
+      <button id="start-btn" class="start-btn">
+        Take the Quiz
+        <span class="arrow">→</span>
+      </button>
+
+      <div class="landing-meta">
+        <span>⏱ ~2 minutes</span>
+        <span>📊 787 occupations</span>
+        <span>🔬 Research-backed</span>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- QUESTION SCREEN                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="question-screen" class="screen question-screen screen-hidden" aria-label="Quiz">
+      <div class="question-wrapper">
+        <!-- Progress -->
+        <div class="progress-bar">
+          <div class="progress-track">
+            <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+          </div>
+          <span id="progress-text" class="progress-text">1 / 10</span>
+        </div>
+
+        <!-- Question Content (this region slides) -->
+        <div id="question-content" class="question-content">
+          <div id="question-number" class="question-number">Question 1</div>
+          <h2 id="question-text" class="question-text"></h2>
+          <p id="question-hint" class="question-hint"></p>
+
+          <div id="options-container" class="options-container" role="radiogroup">
+            <!-- Options rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="question-nav">
+          <button id="back-btn" class="nav-btn secondary" style="visibility: hidden">← Back</button>
+          <button id="next-btn" class="nav-btn primary" disabled>Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- RESULT SCREEN                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <section id="result-screen" class="screen result-screen screen-hidden" aria-label="Results">
+      <div class="result-wrapper">
+        <div class="result-header">Your AI Applicability Score</div>
+
+        <!-- Animated Gauge -->
+        <div id="score-gauge" class="score-gauge">
+          <span id="score-value" class="score-value">0</span>
+          <span class="score-unit">/ 100</span>
+        </div>
+
+        <div id="score-label" class="score-label"></div>
+        <p id="score-description" class="score-description"></p>
+
+        <!-- Similar Occupations -->
+        <div id="similar-section" class="similar-section">
+          <div class="section-title">Occupations with similar AI applicability</div>
+          <div id="similar-occupations"></div>
+        </div>
+
+        <!-- Occupation Explorer -->
+        <button id="toggle-explorer" class="explorer-toggle">Browse all 787 occupations</button>
+
+        <div id="occupation-explorer" class="occupation-explorer">
+          <input
+            id="occupation-search"
+            class="search-input"
+            type="search"
+            placeholder="Search by job title or SOC code..."
+            autocomplete="off"
+          >
+          <div id="occupation-list" class="occupation-list"></div>
+        </div>
+
+        <!-- Restart -->
+        <button id="restart-btn" class="restart-btn">↻ Take the quiz again</button>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>
+          Based on <a href="https://arxiv.org/abs/2507.07935" target="_blank" rel="noopener">
+          "Working with AI: Measuring the Applicability of Generative AI to Occupations"</a>
+          by Tomlinson et al., Microsoft Research (2025).
+        </p>
+        <p>
+          Scores derived from Bing Copilot consumer usage data (Jan–Sep 2024).
+          This quiz provides an estimate — not a prediction of job displacement.
+        </p>
+        <p>
+          <a href="https://github.com/microsoft/working-with-ai" target="_blank" rel="noopener">View on GitHub</a>
+        </p>
+      </footer>
+    </section>
+  </div>
+
+  <!-- App Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
