@@ -180,6 +180,13 @@ body {
   color: var(--text-secondary);
   font-family: var(--font-body);
   letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.landing-badge:hover {
+  border-color: var(--border-accent);
+  color: var(--text-primary);
 }
 
 .landing-badge .dot {
